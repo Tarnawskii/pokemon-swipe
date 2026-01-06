@@ -1,0 +1,111 @@
+{
+  "id": "a06e8081-40c6-4c41-8854-0839a2e01917",
+  "username": "k",
+  "email": "k@op.pl",
+  "dob": "4444-04-04",
+  "password": "kk",
+  "likes": [
+    {
+      "pokemonId": 631,
+      "name": "Ragnar the heatmor",
+      "joke": "Chuck Norris smells what the Rock is cooking... because the Rock is Chuck Norris' personal chef."
+    },
+    {
+      "pokemonId": 717,
+      "name": "Yngve the yveltal",
+      "joke": "When Chuck Norris showers with his new apprentice he says \"I hope you ain't a faggot because then I'm gonna fuck you in the ass, because I hate faggots!\""
+    },
+    {
+      "pokemonId": 488,
+      "name": "Sławomir the cresselia",
+      "joke": "Nothing can escape the gravity of a black hole, except for Chuck Norris. Chuck Norris eats black holes. They taste like chicken."
+    },
+    {
+      "pokemonId": 584,
+      "name": "Arne the vanilluxe",
+      "joke": "When Chuck Norris was a year old, other kids his age were eating strained peas for dinner. Chuck would have a steak, medium rare. And a baked potato."
+    },
+    {
+      "pokemonId": 493,
+      "name": "Bernt the arceus",
+      "joke": "Chuck Norris' dog is a Velociraptor."
+    },
+    {
+      "pokemonId": 672,
+      "name": "Tadeusz the skiddo",
+      "joke": "If you have $100 and Chuck Norris is broke, He still has more money than you."
+    },
+    {
+      "pokemonId": 701,
+      "name": "Franz the hawlucha",
+      "joke": "Chuck Norris is actually the front man for Apple. He let's Steve Jobs run the show when he's on a mission. Chuck Norris is always on a mission."
+    },
+    {
+      "pokemonId": 874,
+      "name": "Ryszard the stonjourner",
+      "joke": "The Rolling Stones would have disbanded less than six months after they formed if Chuck Norris hadn't attended one of their early gigs and jumped onstage to play a devastatingly awesome guitar solo, thus terrifying them into staying together for decades. (Oh, and he also pimp-slapped Mick Jagger in the lips, permanently disfigureing him.)"
+    },
+    {
+      "pokemonId": 392,
+      "name": "Stig the infernape",
+      "joke": "For Charlie Sheen winning is just wishful thinking. For Chuck Norris it's a way of life."
+    },
+    {
+      "pokemonId": 614,
+      "name": "Kent the beartic",
+      "joke": "Chuck Norris can wheelie on a unicycle. While sitting on a park bench. On Jupiter. And at the same time, he's defeating Red with a Frillish."
+    },
+    {
+      "pokemonId": 570,
+      "name": "Ola the zorua",
+      "joke": "Much like a top fuel dragracer, Chuck Norris' penis is equipped with a parachute."
+    },
+    {
+      "pokemonId": 712,
+      "name": "Piotr the bergmite",
+      "joke": "When Chuck Norris brutally murders you, he will send the cleanup bill to your immediate family, and they'd better fucking pay."
+    },
+    {
+      "pokemonId": 870,
+      "name": "Franz the falinks",
+      "joke": "Chuck Norris is actually the front man for Apple. He let's Steve Jobs run the show when he's on a mission. Chuck Norris is always on a mission."
+    }
+  ],
+  "dislikes": [
+    {
+      "pokemonId": 263,
+      "name": "Franz the zigzagoon",
+      "joke": "A new one, got on it myself after coming home from holidays - a sure \"only Chuck Norris can do THAT!\" Chuck Norris can go through airport security without being humiliated"
+    },
+    {
+      "pokemonId": 858,
+      "name": "Kent the hatterene",
+      "joke": "Chuck Norris knows the last digit of pi."
+    },
+    {
+      "pokemonId": 964,
+      "name": "Zbigniew the palafin-zero",
+      "joke": "Chuck Norris once rode a nine foot grizzly bear through an automatic car wash, instead of taking a shower."
+    },
+    {
+      "pokemonId": 150,
+      "name": "Leif the mewtwo",
+      "joke": "Chuck Norris has volunteered to remain on earth after the Rapture; he will spend his time fighting the Anti-Christ."
+    },
+    {
+      "pokemonId": 414,
+      "name": "Bjørn the mothim",
+      "joke": "Chuck Norris once convinced a Playboy bunny to give him a blowjob while he was taking a shit"
+    },
+    {
+      "pokemonId": 417,
+      "name": "Sindre the pachirisu",
+      "joke": "Chuck Norris can compile syntax errors."
+    },
+    {
+      "pokemonId": 155,
+      "name": "Stian the cyndaquil",
+      "joke": "While Charlie Sheen was banging seven gram rocks and finishing them, Chuck Norris was banging seven pound rocks and finishing them."
+    }
+  ]
+}

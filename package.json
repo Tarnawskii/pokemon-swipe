@@ -1,0 +1,19 @@
+{
+  "name": "pokemon-tiner",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api \"npm --workspace web run dev\" \"npm --workspace api run start:dev\"",
+    "build": "npm --workspace api run build && npm --workspace web run build",
+    "start": "concurrently -n web,api \"npm --workspace api run start:prod\" \"npm --workspace web run start\""
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0"
+  }
+}
