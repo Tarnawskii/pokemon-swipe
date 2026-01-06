@@ -1,4 +1,4 @@
-# Pokémon Tinder
+# Pokémon-swipe
 
 A full-stack web application that lets you swipe through Pokémon, like/dislike them, and keep track of your favorites. Each Pokémon comes with a unique Chuck Norris joke!
 
