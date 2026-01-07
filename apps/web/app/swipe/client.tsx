@@ -8,8 +8,6 @@ import useProfiles from "../hooks/useProfiles";
 import ProfileCard from "./components/profileCard";
 import { useHistory } from "../hooks/useHistory";
 
-/* ---------------- Regions ---------------- */
-
 const regions: Region[] = [
   { name: "Kanto", min: 1, max: 151 },
   { name: "Johto", min: 152, max: 251 },
@@ -27,8 +25,6 @@ const allRegion: Region = { name: "All", min: 1, max: 1008 };
 function getRegionForId(id: number): Region {
   return regions.find((r) => id >= r.min && id <= r.max) || allRegion;
 }
-
-/* ---------------- Component ---------------- */
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -72,25 +68,6 @@ export default function SwipeClient() {
     setSelectedRegion(region);
   }, []);
 
-  /* ---------------- Actions ---------------- */
-
-  async function sendPokemonFeedback(params: {
-    name?: string;
-    joke?: string;
-    isLike: boolean;
-  }) {
-    if (!params.name) return;
-    await fetch(`${API_BASE}/pokemon/feedback`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: params.name,
-        joke: params.joke ?? "",
-        isLike: params.isLike,
-      }),
-    }).catch(() => {});
-  }
-
   function handleLogout() {
     localStorage.removeItem("username");
     router.push("/");
@@ -102,14 +79,11 @@ export default function SwipeClient() {
     setIsAnimatingSwipe(true);
 
     try {
-      // Call the swipe function from useProfiles
       await swipe(direction);
     } finally {
       setIsAnimatingSwipe(false);
     }
   }
-
-  /* ---------------- Render ---------------- */
 
   return (
     <div className="min-h-screen px-6 py-10" style={{ background: "var(--app-bg)" }}>
