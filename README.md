@@ -5,7 +5,10 @@ A full-stack web application that lets you swipe through Pokémon, like/dislike 
 ## ⚡ Get Started in Seconds
 
 ### Fastest Way to Run
-
+Remove node_modules if present
+```
+rm node_modules
+```
 **Windows:**
 ```bash
 start.bat
