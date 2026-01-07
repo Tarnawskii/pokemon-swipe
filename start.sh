@@ -21,33 +21,27 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-echo "[1/4] Installing root dependencies..."
-npm install --legacy-peer-deps
+# Detect platform and architecture
+OS=$(uname -s)
+ARCH=$(uname -m)
+echo "Detected platform: $OS $ARCH"
+echo ""
+
+echo "[1/3] Cleaning up previous builds..."
+rm -rf node_modules apps/*/node_modules apps/*/.next package-lock.json apps/*/package-lock.json
+echo "✓ Cleanup complete"
+
+echo ""
+echo "[2/3] Installing dependencies from workspace root..."
+npm install
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to install root dependencies"
+    echo "Error: Failed to install dependencies"
     exit 1
 fi
+echo "✓ Dependencies installed successfully"
 
 echo ""
-echo "[2/4] Installing backend dependencies..."
-cd apps/api
-npm install --legacy-peer-deps
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to install backend dependencies"
-    cd ../..
-    exit 1
-fi
-cd ../..
-
-echo ""
-echo "[3/4] Starting Backend Server (NestJS)..."
-echo "Backend starting in separate process..."
-(cd apps/api && npm run start:dev) &
-BACKEND_PID=$!
-sleep 5
-
-echo ""
-echo "[4/4] Starting Frontend Server (Next.js)..."
+echo "[3/3] Starting servers..."
 echo ""
 echo "===================================="
 echo "  Servers Running"
@@ -59,9 +53,7 @@ echo ""
 echo "Press Ctrl+C to stop both servers"
 echo ""
 
-cd apps/web
 npm run dev
 
 # Cleanup: kill backend when frontend stops
 kill $BACKEND_PID 2>/dev/null
-
