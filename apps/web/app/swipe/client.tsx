@@ -20,53 +20,61 @@ const regions: Region[] = [
   { name: "Paldea", min: 899, max: 1008 },
 ];
 
-const allRegion: Region = { name: "All", min: 1, max: 1008 };
+const ALL_REGION: Region = { name: "All", min: 1, max: 1008 };
 
 function getRegionForId(id: number): Region {
-  return regions.find((r) => id >= r.min && id <= r.max) || allRegion;
+  return regions.find((r) => id >= r.min && id <= r.max) ?? ALL_REGION;
 }
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
 export default function SwipeClient() {
   const router = useRouter();
 
   const [types, setTypes] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState<Region>(allRegion);
+  const [selectedRegion, setSelectedRegion] = useState<Region>(ALL_REGION);
   const [isAnimatingSwipe, setIsAnimatingSwipe] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [username, setUsername] = useState("");
 
-  const username = localStorage.getItem("username") ?? "";
+  /* ---------------- Data ---------------- */
+
   const { dislikedPokemons } = useHistory(username);
-  const dislikedIds = useMemo(() => dislikedPokemons.map((p) => p.pokemonId), [dislikedPokemons]);
-  const { profiles, swipe, loading, error } = useProfiles(selectedRegion, selectedType, dislikedIds);
+
+  const dislikedIds = useMemo(
+    () => dislikedPokemons.map((p) => p.pokemonId),
+    [dislikedPokemons]
+  );
+
+  const { profiles, swipe, loading, error } = useProfiles(
+    selectedRegion,
+    selectedType,
+    dislikedIds
+  );
 
   const currentProfile = profiles.length > 0 ? profiles[0] : null;
-  const isSwiping = profiles.length > 1;
 
   /* ---------------- Effects ---------------- */
 
+  // Load Pokémon types
   useEffect(() => {
     fetchAllPokemonTypes()
       .then(setTypes)
       .catch(() => setTypes([]));
   }, []);
 
-  useEffect(() => {    const storedUsername = localStorage.getItem("username");
+  // Load user + region from localStorage
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+
     if (!storedUsername) {
       setShowLoginModal(true);
+    } else {
+      setUsername(storedUsername);
     }
+    
   }, []);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("selectedRegion");
-    if (!saved) return;
-
-    const region = regions.find((r) => r.name === saved) || allRegion;
-
-    setSelectedRegion(region);
-  }, []);
+  /* ---------------- Handlers ---------------- */
 
   function handleLogout() {
     localStorage.removeItem("username");
@@ -83,6 +91,12 @@ export default function SwipeClient() {
     } finally {
       setIsAnimatingSwipe(false);
     }
+  }
+
+  /* ---------------- Render ---------------- */
+
+  if (error) {
+    return <p>Something went wrong</p>;
   }
 
   return (
@@ -157,13 +171,13 @@ export default function SwipeClient() {
               value={selectedRegion.name}
               onChange={(e) => {
                 const region =
-                  regions.find((r) => r.name === e.target.value) || allRegion;
+                  regions.find((r) => r.name === e.target.value) || ALL_REGION;
                 setSelectedRegion(region);
               }}
               style={{ background: "rgba(119, 120, 123)", color: "#ffffffff", fontFamily: "var(--font-body)" }}
             >
-              <option value={allRegion.name}>
-                {allRegion.name} ({allRegion.min}-{allRegion.max})
+              <option value={ALL_REGION.name}>
+                {ALL_REGION.name} ({ALL_REGION.min}-{ALL_REGION.max})
               </option>
               {regions.map((r) => (
                 <option key={r.name} value={r.name}>

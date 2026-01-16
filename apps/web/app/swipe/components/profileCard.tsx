@@ -17,7 +17,6 @@ export default function ProfileCard({
 }: ProfileCardProps) {
   const [expanded, setExpanded] = useState(false);
 
-  // Show loading / empty state
   if (!current) {
     return (
       <p
@@ -29,14 +28,20 @@ export default function ProfileCard({
     );
   }
 
+  const pokemon = current.pokemon;
+
   const imageUrl =
-    current.pokemon.sprites?.other?.["official-artwork"]?.front_default ||
-    current.pokemon.sprites?.front_default ||
+    pokemon.sprites?.other?.["official-artwork"]?.front_default ||
+    pokemon.sprites?.front_default ||
     "";
-  const regionLabel =
-    typeof current.pokemon.id === "number"
-      ? getRegionForId(current.pokemon.id).name
+
+  const regionName =
+    typeof pokemon.id === "number"
+      ? getRegionForId(pokemon.id).name
       : selectedRegion.name;
+
+  const types = pokemon.types.map((t) => t.type.name).join(", ");
+  const abilities = pokemon.abilities.map((a) => a.ability.name).join(", ");
 
   return (
     <div
@@ -52,7 +57,7 @@ export default function ProfileCard({
         {imageUrl ? (
           <Image
             src={imageUrl}
-            alt={current.pokemon.name}
+            alt={pokemon.name}
             fill
             priority
             sizes="(max-width: 640px) 100vw, 384px"
@@ -74,16 +79,15 @@ export default function ProfileCard({
         >
           <button
             type="button"
-            className="text-left w-full"
-            onClick={() => setExpanded(!expanded)}
-            style={{ cursor: "pointer" }}
+            className="w-full text-left"
+            onClick={() => setExpanded((prev) => !prev)}
           >
             <div className="flex items-baseline justify-between gap-3">
               <h2
                 className="text-xl"
                 style={{ color: "#ffffff", fontFamily: "var(--font-display)" }}
               >
-                {current.pokemon.name}
+                {pokemon.name}
               </h2>
               <span
                 className="text-xs font-semibold"
@@ -93,7 +97,7 @@ export default function ProfileCard({
                   textDecoration: "underline",
                 }}
               >
-                {regionLabel} · {expanded ? "Less ▲" : "More ▼"}
+                {regionName} · {expanded ? "Less ▲" : "More ▼"}
               </span>
             </div>
           </button>
@@ -105,18 +109,15 @@ export default function ProfileCard({
             {current.joke || "(No description yet)"}
           </p>
 
-       
           {expanded && (
             <div
               className="mt-3 space-y-1 text-sm"
               style={{ color: "#ffffff", fontFamily: "var(--font-body)" }}
             >
-              <p>Type: {current.pokemon.types.map((t) => t.type.name).join(", ")}</p>
-              <p>Weight: {current.pokemon.weight}</p>
-              <p>Height: {current.pokemon.height}</p>
-              <p>
-                Skill: {current.pokemon.abilities.map((a) => a.ability.name).join(", ")}
-              </p>
+              <p>Type: {types}</p>
+              <p>Weight: {pokemon.weight}</p>
+              <p>Height: {pokemon.height}</p>
+              <p>Skills: {abilities}</p>
             </div>
           )}
         </div>

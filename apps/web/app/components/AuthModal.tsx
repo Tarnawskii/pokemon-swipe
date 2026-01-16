@@ -49,7 +49,6 @@ export default function AuthModal({ type, onClose }: Props) {
         // ----- REGISTER -----
         const username = String(formData.get("username"));
         const email = String(formData.get("email"));
-        const dob = String(formData.get("dob"));
         const password = String(formData.get("password"));
         const confirmPassword = String(formData.get("confirmPassword"));
 
@@ -189,23 +188,6 @@ export default function AuthModal({ type, onClose }: Props) {
                   type="email"
                   required
                   autoComplete="email"
-                  className="mt-1 w-full rounded-xl px-3 py-2 text-sm outline-none"
-                  style={{
-                    background: "rgba(43, 45, 66, 0.08)",
-                    color: "#111827",
-                    fontFamily: "var(--font-body)",
-                  }}
-                />
-              </label>
-
-              <label className="block">
-                <span className="block text-xs" style={{ color: "#111827", fontFamily: "var(--font-display)" }}>
-                  Date of birth
-                </span>
-                <input
-                  name="dob"
-                  type="date"
-                  required
                   className="mt-1 w-full rounded-xl px-3 py-2 text-sm outline-none"
                   style={{
                     background: "rgba(43, 45, 66, 0.08)",

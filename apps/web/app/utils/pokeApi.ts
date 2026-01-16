@@ -20,7 +20,6 @@ export const allRegion: Region = {
   max: 1008,
 };
 
-/* ---------------- Helpers ---------------- */
 
 export function getRegionForId(id?: number): Region {
   if (!id) return allRegion;
@@ -81,7 +80,7 @@ export async function fetchRandomPokemon(
 
       return pokemon;
     } catch {
-      // fetch failed → try again
+      continue;
     }
   }
 

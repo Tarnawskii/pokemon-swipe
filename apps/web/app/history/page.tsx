@@ -12,34 +12,36 @@ function spriteUrl(id: number) {
 export default function HistoryPage() {
   const router = useRouter();
   const [username, setUsername] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
   const {
-    likedPokemons: likes,
-    dislikedPokemons: dislikes,
-    isLoading: historyLoading,
-    error: historyError,
+    likedPokemons,
+    dislikedPokemons,
+    isLoading,
+    error,
   } = useHistory(username);
-  console.log("Likes:", likes);
-  console.log("Dislikes:", dislikes);
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
-    setUsername(storedUsername);
-    if (!storedUsername) {
+
+    if (storedUsername) {
+      setUsername(storedUsername);
+    } else {
       setShowLoginModal(true);
     }
   }, []);
-  useEffect(() => {
-    setIsLoading(historyLoading);
-  }, [historyLoading]);
-  useEffect(() => {
-    setError(historyError);
-  }, [historyError]);
 
   function handleLogout() {
     localStorage.removeItem("username");
     router.push("/");
+  }
+
+  if (isLoading) {
+    return <p>Loading history...</p>;
+  }
+
+  if (error) {
+    return <p>Something went wrong: {error}</p>;
   }
 
   if (isLoading) {
@@ -102,13 +104,13 @@ export default function HistoryPage() {
           <h2 className="text-lg" style={{ color: "#ffffffff", fontFamily: "var(--font-display)" }}>
             Liked Pokémons
           </h2>
-          {likes.length === 0 ? (
+          {likedPokemons.length === 0 ? (
             <p className="mt-2 text-sm" style={{ color: "#ffffffff", fontFamily: "var(--font-body)" }}>
               You have not liked any Pokémon yet.
             </p>
           ) : (
             <ul className="mt-2 space-y-4">
-              {[...likes].reverse().map((entry) => (
+              {[...likedPokemons].reverse().map((entry) => (
                 <li key={`like-${entry.pokemonId}-${entry.name}`} className="flex items-start gap-4">
                   <Image src={spriteUrl(entry.pokemonId)} alt="" width={48} height={48} style={{ objectFit: "contain" }} />
                   <div className="min-w-0">
@@ -131,13 +133,13 @@ export default function HistoryPage() {
           <h2 className="text-lg" style={{ color: "#ffffffff", fontFamily: "var(--font-display)" }}>
             Disliked Pokémons
           </h2>
-          {dislikes.length === 0 ? (
+          {dislikedPokemons.length === 0 ? (
             <p className="mt-2 text-sm" style={{ color: "#ffffffff", fontFamily: "var(--font-body)" }}>
               You have not disliked any Pokémon yet.
             </p>
           ) : (
             <ul className="mt-2 space-y-4">
-              {[...dislikes].reverse().map((entry) => (
+              {[...dislikedPokemons].reverse().map((entry) => (
                 <li key={`dislike-${entry.pokemonId}-${entry.name}`} className="flex items-start gap-4">
                   <Image src={spriteUrl(entry.pokemonId)} alt="" width={48} height={48} style={{ objectFit: "contain" }} />
                   <div className="min-w-0">
@@ -156,8 +158,6 @@ export default function HistoryPage() {
           )}
         </section>
         
-       
-
         <Link
           href="/swipe"
           className="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold"

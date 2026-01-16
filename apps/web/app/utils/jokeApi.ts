@@ -36,6 +36,5 @@ export function getJokeCategoryFromPokemon(pokemonTypes: { type: { name: string 
   if (type === "steel") return "dev";
   if (type === "ghost") return "political";
 
-  // fallback if no match
   return undefined;
 }
