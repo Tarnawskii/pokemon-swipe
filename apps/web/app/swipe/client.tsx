@@ -32,11 +32,8 @@ export default function SwipeClient() {
   const [types, setTypes] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState("");
   const [selectedRegion, setSelectedRegion] = useState<Region>(ALL_REGION);
-  const [isAnimatingSwipe, setIsAnimatingSwipe] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState("");
-
-  /* ---------------- Data ---------------- */
 
   const { dislikedPokemons } = useHistory(username);
 
@@ -45,24 +42,23 @@ export default function SwipeClient() {
     [dislikedPokemons]
   );
 
+  const isLoggedIn = Boolean(username);
+
   const { profiles, swipe, loading, error } = useProfiles(
     selectedRegion,
     selectedType,
-    dislikedIds
+    dislikedIds,
+    isLoggedIn
   );
 
   const currentProfile = profiles.length > 0 ? profiles[0] : null;
 
-  /* ---------------- Effects ---------------- */
-
-  // Load Pokémon types
   useEffect(() => {
     fetchAllPokemonTypes()
       .then(setTypes)
       .catch(() => setTypes([]));
   }, []);
 
-  // Load user + region from localStorage
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
 
@@ -71,10 +67,7 @@ export default function SwipeClient() {
     } else {
       setUsername(storedUsername);
     }
-    
   }, []);
-
-  /* ---------------- Handlers ---------------- */
 
   function handleLogout() {
     localStorage.removeItem("username");
@@ -82,18 +75,9 @@ export default function SwipeClient() {
   }
 
   async function handleSwipe(direction: "like" | "dislike") {
-    if (loading || isAnimatingSwipe) return;
-
-    setIsAnimatingSwipe(true);
-
-    try {
-      await swipe(direction);
-    } finally {
-      setIsAnimatingSwipe(false);
-    }
+    if (loading) return;
+    await swipe(direction);
   }
-
-  /* ---------------- Render ---------------- */
 
   if (error) {
     return <p>Something went wrong</p>;
@@ -207,7 +191,7 @@ export default function SwipeClient() {
           <button
             type="button"
             onClick={() => handleSwipe("dislike")}
-            disabled={!currentProfile || loading || isAnimatingSwipe}
+            disabled={!currentProfile || loading}
             className="inline-flex flex-1 items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold"
             style={{ background: "var(--app-primary)", color: "#0b1b1a", fontFamily: "var(--font-display)" }}
           >
@@ -217,7 +201,7 @@ export default function SwipeClient() {
           <button
             type="button"
             onClick={() => handleSwipe("like")}
-            disabled={!currentProfile || loading || isAnimatingSwipe}
+            disabled={!currentProfile || loading}
             className="inline-flex flex-1 items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold"
             style={{ background: "var(--app-accent)", color: "#0b1b1a", fontFamily: "var(--font-display)" }}
           >

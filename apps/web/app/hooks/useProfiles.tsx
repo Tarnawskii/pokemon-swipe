@@ -4,12 +4,19 @@ import { fetchRandomPokemon } from "../utils/pokeApi";
 import { fetchChuckJoke, getJokeCategoryFromPokemon } from "../utils/jokeApi";
 import { randomFirstName } from "../components/randomFirstName";
 
-export default function useProfiles(region: Region, type?: string,disliked: number[] = []) {
+export default function useProfiles(
+  region: Region,
+  type?: string,
+  disliked: number[] = [],
+  enabled = true
+) {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
  
   const loadOne = useCallback(async () => {
+    if (!enabled) return;
+
     setLoading(true);
     setError(null);
     
@@ -33,11 +40,18 @@ export default function useProfiles(region: Region, type?: string,disliked: numb
     } finally {
       setLoading(false);
     }
-  }, [region, type, disliked]);
+  }, [enabled, region, type, disliked]);
 
   useEffect(() => {
+    if (!enabled) {
+      setProfiles([]);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
     void loadOne();
-  }, [loadOne]);
+  }, [enabled, loadOne]);
 
   async function swipe(choice: "like" | "dislike") {
     if (loading) return;
